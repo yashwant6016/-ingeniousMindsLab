@@ -78,7 +78,8 @@ class User extends Authenticatable
                if ($request->hasFile('picture')) {
                     $image=$request->file('picture')->store('public/demo');
                 }
-                // dd($request->hobby);
+                $img=explode('/',$image);
+                $image=$img[1].'/'.$img[2];
                $hobby=implode(',' , $request->hobby);
                $user=new User();
                $user->name=$request->name;

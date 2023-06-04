@@ -12,8 +12,8 @@
             <div class="d-flex justify-content-center">
                 <div class="w-75">
                     <form action="javascript:void(0)" id="register" class="register-form"  method="post" enctype="multipart/form-data">
-                        {{-- @csrf --}}
-                        <input type="hidden" id="userid" name="id" value="">
+                        @csrf
+                        <input type="hidden" id="userid" name="id" value="0">
                         <div class="row"> 
                             <div class="col-md-6">
                                 <div class="mb-3">
@@ -50,22 +50,16 @@
                                     </div>
                                 </div>
                                 
-                                <div class="mb-3">
-                                    <label for="gender" class="form-label">Gender</label>
-                                </div>
-                                <div class="mb-3"> 
-                                    <div class=" @error('gender') is-invalid @enderror">
+                                <div class="mb-3">Gender </div>
+                                <div class="mb-3 d-flex"> 
+                                    <div class="me-2 @error('gender') is-invalid @enderror">
                                         <input class="form-check-input" type="radio" name="gender" id="male" value="male">
                                     </div>
-                                    <label class="form-check-label" for="male">
-                                    male
-                                    </label>
-                                    <div class=" @error('gender') is-invalid @enderror">
+                                    <label class="me-2 form-check-label" for="male"> male</label>
+                                    <div class="me-2 @error('gender') is-invalid @enderror">
                                         <input class="form-check-input" type="radio" name="gender" id="female" value="female">
                                     </div>
-                                    <label class="form-check-label" for="male">
-                                    female
-                                    </label>
+                                    <label class="me-2 form-check-label" for="female" id="gen"> female </label>
                                     <div id="gender" class="invalid-feedback">
                                         @error('gender')
                                          {{ $message }}
@@ -76,8 +70,8 @@
                                     <label for="education" class="form-label">Education</label>
                                 </div>
                                 <div class="mb-3">
-                                    <div class="@error('education') is-invalid @enderror">
-                                        <select class="form-select " id="education" name="education" aria-label="Default select example">
+                                    <div id="educ" class="@error('education') is-invalid @enderror">
+                                        <select class="form-select " name="education" aria-label="Default select example">
                                             <option value=" ">Select</option>
                                             @foreach ($education as $edu)                                            
                                                 <option value="{{$edu->id}}" {{ (old("education") == $edu->id ? "selected":"") }}>{{$edu->edu_name}}</option>
@@ -95,22 +89,22 @@
                                 <div class="mb-1">
                                     <label for="Hobby" class="form-label">Hobby</label>
                                 </div>
-                                <div class="mb-3 d-flex" >
-                                    <div class="form-check  @error('hobby') is-invalid @enderror">
-                                        <input class="form-check-input" name="hobby[]" type="checkbox" value="Cricket" id="Cricket" {{ (is_array(old('hobby')) && in_array(1, old('hobby'))) ? ' checked' : '' }}>
-                                        <label class="form-check-label" for="Cricket">
+                                <div class="mb-3 d-flex hobby" >
+                                    <div class="form-check @error('hobby') is-invalid @enderror" id="hobbyCheckbox">
+                                        <input class="me-2 form-check-input" name="hobby[]" type="checkbox" value="Cricket" id="Cricket" {{ (is_array(old('hobby')) && in_array(1, old('hobby'))) ? ' checked' : '' }}>
+                                        <label class="me-2 form-check-label" for="Cricket">
                                         Cricket
                                         </label>
                                     </div>
                                     <div class="form-check @error('hobby') is-invalid @enderror">
-                                        <input class="form-check-input " name="hobby[]" type="checkbox" value="Singing" id="Singing" {{ (is_array(old('hobby')) && in_array(2, old('hobby'))) ? ' checked' : '' }}>
-                                        <label class="form-check-label" for="Singing">
+                                        <input class="me-2 form-check-input " name="hobby[]" type="checkbox" value="Singing" id="Singing" {{ (is_array(old('hobby')) && in_array(2, old('hobby'))) ? ' checked' : '' }}>
+                                        <label class="me-2 form-check-label" for="Singing">
                                         Singing
                                         </label>
                                     </div>
                                     <div class="form-check @error('hobby') is-invalid @enderror">
-                                        <input class="form-check-input " name="hobby[]" type="checkbox" value="Travelling" id="Travelling" {{ (is_array(old('hobby')) && in_array(3, old('hobby'))) ? ' checked' : '' }}>
-                                        <label class="form-check-label" for="Travelling">
+                                        <input class="me-2 form-check-input " name="hobby[]" type="checkbox" value="Travelling" id="x`" {{ (is_array(old('hobby')) && in_array(3, old('hobby'))) ? ' checked' : '' }}>
+                                        <label class="me-2 form-check-label" for="Travelling">
                                         Travelling
                                         </label>
                                     </div>
@@ -142,12 +136,13 @@
                                     </div>
                                     <div class="mb-3">
                                         <div class="input-group @error('picture') is-invalid @enderror">
-                                            <input type="file" class="form-control " id="picture" name="picture" value="{{old('picture')}}">
-                                            <div id="picture" class="invalid-feedback">
-                                                @error('picture')
-                                                 {{ $message }}
-                                                @enderror
-                                            </div>
+                                            <input type="file" class="form-control picture"name="picture" value="{{old('picture')}}">
+                                            
+                                        </div>
+                                        <div id="picture" class="invalid-feedback">
+                                            @error('picture')
+                                             {{ $message }}
+                                            @enderror
                                         </div>
                                     </div>
                                     
@@ -188,14 +183,6 @@
                         <th>Action</th>
                     </thead> 
                     <tbody id="userdata">
-                        {{-- <tr>
-                            <td>1</td>
-                            <td>Yashwant</td>
-                            <td>Cricket</td>
-                            <td>yashwant@yopmail.com</td>
-                            <td><img width="50px" height="50px"></td>
-                            <td> <a href="#" class="">Edit</a> <span class="mx-2">|</span><a href="#" class="">Delete</a></td>
-                        </tr> --}}
                     </tbody>
                 </table>
                 <a href="javascript:void(0)" data-offset="0" class="loadMore" >Load more transactions <i class="fa-solid fa-chevron-down"></i></a>
@@ -211,17 +198,48 @@
             </script>
         <script>
     
-    $(document).on('submit','.register-form',function(){
+$(document).on('submit','.register-form',function(e){
     var forms = document.querySelectorAll('.register-form');
     formValid=[];
+    var isValid=$('input[name=gender]').is(":checked");
+    if(isValid===false)
+    {
+        $('#gen').addClass('is-invalid');
+        $('input[name=gender]').parent().find('.invalid-feedback').html('This Field is required');
+    }
+    else{
+        $('#gen').removeClass('is-invalid');
+        $('input[name=gender]').parent().find('.invalid-feedback').html('');
+    }
+
+    
+    var IsChecked = $('input[name="hobby[]"]:checked').length > 0;
+    if(IsChecked==false)
+    {
+        $('#hobbyCheckbox').addClass('is-invalid');
+        $('#hobby').html('This Field is required');
+    }
+
+    var sel=$('select[name=education]').val();
+    if(sel=='')
+    {
+        $('#educ').addClass('is-invalid');
+    }
+    // var isValid=$('input[name=hobby]').is(":checked");
+    // if(isValid===false)
+    // {
+    //     $('#gen').addClass('is-invalid');
+    //     $('input[name=gender]').parent().find('.invalid-feedback').html('This Field is required');
+    // }
     $("form.register-form :input").each(function(){
         var input = $(this);
-        if(input.val()=='' && input.attr('type')!=='submit' && input.attr('type')!=='button')
+        console.log(input.attr('name'));
+        if(input.val()=='' && input.attr('type')!=='submit' && input.attr('type')!=='button'  )
         {
-            formValid.push(false);
-            label=input.parent().find('label').text();
-            input.parent().addClass('is-invalid');
-            input.parent().find('.invalid-feedback').html('This Field is required'); 
+                formValid.push(false);
+                label=input.parent().find('label').text();
+                input.parent().addClass('is-invalid');
+                input.parent().find('.invalid-feedback').html('This Field is required'); 
         }else{
                 if(input.attr('name')=='email')
                 {
@@ -230,7 +248,6 @@
                         formValid.push(true);
                         input.parent().removeClass('is-invalid');
                     }else{
-                        console.log(input);
                             formValid.push(false);
                             $('#register').attr('disabled','true'); 
                             input.parent().addClass('is-invalid');
@@ -239,7 +256,7 @@
                 }
                 if(input.attr('name')=='name')
                 {
-                    var validRegex =/(^([a-zA-Z]+)?$)/u;
+                    var validRegex =/^[a-zA-Z ]{2,30}$/;
                     if (input.val().match(validRegex)) {
                         formValid.push(true);
                         input.parent().removeClass('is-invalid');
@@ -247,7 +264,7 @@
                             formValid.push(false);
                             $('#register').attr('disabled','true'); 
                             input.parent().addClass('is-invalid');
-                            input.parent().parent().find('.invalid-feedback').html('{!!__('language.name')!!}{!!__('language.is invalid')!!}');  
+                            input.parent().parent().find('.invalid-feedback').html('Not a valid Name');  
                     }
                 }
                 else if(input.attr('phone')=='phone')
@@ -260,7 +277,7 @@
                             formValid.push(false);
                             $('#register').attr('disabled','true'); 
                             input.parent().addClass('is-invalid');
-                            input.parent().parent().find('.invalid-feedback').html('{!!__('language.last name')!!}{!!__('language.is invalid')!!}');  
+                            input.parent().parent().find('.invalid-feedback').html('Not a valid Phone Number');  
                     }
                 }
                 else if(input.val())
@@ -271,36 +288,61 @@
                  
         }
     });
+    // console.log(formValid);
     if(formValid.indexOf(false)==-1)
     {
-        $(".register-form").submit();
-          $(document).ready(function(){
-                $('#register').submit(function(e){
-                    e.preventDefault();
-                    // console.log($('#register').serialize());
-                        $.ajax({
-                            url: "{{route('create')}}",
-                            // data: $('#register').serialize(),
-                            data: {name: $("input#name").val(),email: $("input#email").val(),phone: $("input#phone").val(),gender: $("input#gender").val(),education: $("#education").val(), hobby: $("input#hobby").val(), experience: $("input#experience").val(), picture: $("input#Picture").val(), message: $("input#message").val()},
-                            async: true,
-                            type: "POST",
-                            contentType: 'multipart/form-data',
-                            // dataType: 'json',
-                            success: function (response) {
-                                console.log(response);
-                            }
-                        });
-                });
-            });
+        e.preventDefault();
+        var form = this;
+        $.ajax({
+            url: "{{route('create')}}",
+            method: "POST",
+            data: new FormData(form),
+            encType: "multipart/form-data",
+            processData: false,
+            dataType: 'JSON',
+            contentType:false,
+            success: function (response) {
+                if(response.status===true)
+                {
+                    $('input[name=name]').val("");
+                    $('input[name=email]').val("");
+                    $('input[name=phone]').val("");
+                    $('input[name="experience[]""]').val("");
+                    $('input[name=picture').val("");
+                    $('#message').val("");
+                    $('input:checkbox').removeAttr('checked');
+                    $('input:radio').removeAttr('checked');
+                    alert(response.success);
+                }
+            }
+        });
     }   
     return false;
 });
-          
-            //data
+            // $(document).ready(function(){
+            //     $('#register').on('submit', function(e){
+            //         e.preventDefault();
+            //         var form = this;
+            //      console.log($('#register').serialize());
+            //             $.ajax({
+            //                 url: "{{route('create')}}",
+            //                 method: "POST",
+            //                 data: new FormData(form),
+            //                 encType: "multipart/form-data",
+            //                 processData: false,
+            //                 dataType: 'JSON',
+            //                 contentType:false,
+            //                 success: function (response) {
+            //                     console.log(response);
+            //                 }
+            //             });
+            //     });
+            // });
+
             $(document).ready(function(){
                 
                 $("#experiencesadd").click(function () {
-                    $('#insertColumn').append('<div class="d-flex" id="exp"><input type="text" class="form-control mb-1" experience[]><button class="btn btn-sm  btn-outline-danger ms-2" id="DeleteRow" type="button" style="height: 38px;">-</button></div>');
+                    $('#insertColumn').append('<div class="d-flex" id="exp"><input type="text" class="form-control mb-1" name="experience[]"><button class="btn btn-sm  btn-outline-danger ms-2" id="DeleteRow" type="button" style="height: 38px;">-</button></div>');
                 });
                 $(document).on("click", "#DeleteRow", function () {
                     $(this).parents("#exp").remove();
@@ -323,7 +365,7 @@
                         {
                             $('.loadmore').data('offset', (offset+3));
                             $.each(response.data.user,function(index,element){
-                                html='<tr><td>'+(index+1)+'</td><td>'+element.name+'</td><td>'+element.hobby+'</td><td>'+element.email+'</td><td><img width="50px" height="50px"></td><td> <a href="#" class="" onClick="editdata('+element.id+')">Edit</a> <span class="mx-2">|</span><a href="#" class="" onClick="deletedata('+element.id+')">Delete</a></td></tr>';
+                                html='<tr><td>'+(index+1)+'</td><td>'+element.name+'</td><td>'+element.hobby+'</td><td>'+element.email+'</td><td><img src="http://127.0.0.1:8000/get-image?path='+element.image+'" width="50px" height="50px"></td><td> <a href="#" class="" onClick="editdata('+element.id+')">Edit</a> <span class="mx-2">|</span><a href="#" class="" onClick="deletedata('+element.id+')">Delete</a></td></tr>';
                                 $('#userdata').append(html);
                             });
                         }

@@ -27,4 +27,5 @@ Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit.id');
 Route::get('/delete', [UserController::class, 'deleteUser'])->name('delete');
 
 Route::get('/getdata', [UserController::class, 'getuserdata'])->name('getdata');
+Route::get('/get-image', [UserController::class,'getImage'])->name('image.picture');
 
